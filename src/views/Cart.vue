@@ -66,12 +66,12 @@ export default {
     computed: {
         cartTotalLength() {
             return this.cart.items.reduce((acc, curVal) => {
-                return acc += curVal.quantity
+                return acc += curVal.cantidad
             }, 0)
         },
         cartTotalPrice() {
             return this.cart.items.reduce((acc, curVal) => {
-                return acc += curVal.producto.precio * curVal.quantity
+                return acc += curVal.producto.precio * curVal.cantidad
             }, 0)
         },
     }

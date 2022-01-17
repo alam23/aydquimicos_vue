@@ -18,7 +18,7 @@
 
                 <div class="field has-addons mt-6">
                     <div class="control">
-                        <input type="number" class="input" min="1" v-model="quantity">
+                        <input type="number" class="input" min="1" v-model="cantidad">
                     </div>
 
                     <div class="control">
@@ -39,7 +39,7 @@ export default {
     data(){
         return {
             producto: {},
-            quantity: 1
+            cantidad: 1
         }
     },
     mounted() {
@@ -65,12 +65,12 @@ export default {
             this.$store.commit('setIsLoading', false)
         },
         addToCart() {
-            if (isNaN(this.quantity) || this.quantity < 1) {
-                this.quantity = 1
+            if (isNaN(this.cantidad) || this.cantidad < 1) {
+                this.cantidad = 1
             }
             const item = {
                 producto: this.producto,
-                quantity: this.quantity
+                cantidad: this.cantidad
             }
             this.$store.commit('addToCart', item) 
 

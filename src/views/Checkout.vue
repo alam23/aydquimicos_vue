@@ -23,7 +23,7 @@
                         >
                             <td>{{ item.producto.nombre }}</td>
                             <td>S/. {{ item.producto.precio }}</td>
-                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.cantidad }}</td>
                             <td>S/. {{ getItemTotal(item).toFixed(2) }}</td>
                         </tr>
                     </tbody>
@@ -149,7 +149,7 @@ export default {
     },
     methods: {
         getItemTotal(item) {
-            return item.quantity * item.producto.precio
+            return item.cantidad * item.producto.precio
         },
         submitForm() {
             this.errors = []
@@ -193,8 +193,8 @@ export default {
                 const item = this.cart.items[i]
                 const obj = {
                     producto: item.producto.id,
-                    quantity: item.quantity,
-                    precio: item.producto.precio * item.quantity
+                    cantidad: item.cantidad,
+                    precio: item.producto.precio * item.cantidad
                 }
                 items.push(obj)
             }
@@ -213,7 +213,7 @@ export default {
                 .post('/api/v1/checkout/', data)
                 .then(response => {
                     this.$store.commit('clearCart')
-                    this.$router.push('/cart/ProcesoExitoso')
+                    this.$router.push('/cart/proceso-exitoso')
                 })
                 .catch(error => {
                     this.errors.push('Something went wrong. Please try again')
@@ -225,12 +225,12 @@ export default {
     computed: {
         cartTotalPrice() {
             return this.cart.items.reduce((acc, curVal) => {
-                return acc += curVal.producto.precio * curVal.quantity
+                return acc += curVal.producto.precio * curVal.cantidad
             }, 0)
         },
         cartTotalLength() {
             return this.cart.items.reduce((acc, curVal) => {
-                return acc += curVal.quantity
+                return acc += curVal.cantidad
             }, 0)
         }
     }

@@ -29,7 +29,7 @@ export default createStore({
     addToCart(state, item) {
       const exists = state.cart.items.filter(i => i.producto.id === item.producto.id)
       if (exists.length) {
-        exists[0].quantity = parseInt(exists[0].quantity) + parseInt(item.quantity)
+        exists[0].cantidad = parseInt(exists[0].cantidad) + parseInt(item.cantidad)
       } else {
         state.cart.items.push(item)
       }

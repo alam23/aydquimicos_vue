@@ -3,7 +3,7 @@
         <td><router-link :to="item.producto.get_absolute_url">{{ item.producto.nombre }}</router-link></td>
         <td>S/. {{ item.producto.precio }}</td>
         <td>
-            {{ item.quantity }}
+            {{ item.cantidad }}
             <a @click="decrementQuantity(item)">-</a>
             <a @click="incrementQuantity(item)">+</a>            
         </td>
@@ -25,17 +25,17 @@ export default {
     },
     methods: {
         getItemTotal(item) {
-            return item.quantity * item.producto.precio
+            return item.cantidad * item.producto.precio
         },
         decrementQuantity(item) {
-            item.quantity -= 1
-            if (item.quantity === 0) {
+            item.cantidad -= 1
+            if (item.cantidad === 0) {
                 this.$emit('removeFromCart', item)
             }
             this.updateCart()
         },
         incrementQuantity(item) {
-            item.quantity += 1
+            item.cantidad += 1
             this.updateCart()
         },
         updateCart() {
