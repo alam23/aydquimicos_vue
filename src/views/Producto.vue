@@ -39,6 +39,7 @@ export default {
     data(){
         return {
             producto: {},
+            usuario_tipo: {},
             cantidad: 1
         }
     },
@@ -64,24 +65,45 @@ export default {
             
             this.$store.commit('setIsLoading', false)
         },
-        addToCart() {
-            if (isNaN(this.cantidad) || this.cantidad < 1) {
-                this.cantidad = 1
-            }
-            const item = {
-                producto: this.producto,
-                cantidad: this.cantidad
-            }
-            this.$store.commit('addToCart', item) 
+        async addToCart() {
+            await axios
+                .get(`/api/v1/cliente/`)
+                .then(response => {
+                    this.usuario_tipo = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })            
+            if(!this.producto.es_arriesgado || this.usuario_tipo.tipo_cliente=='empresa'){
+                if (isNaN(this.cantidad) || this.cantidad < 1) {
+                    this.cantidad = 1
+                }
+                const item = {
+                    producto: this.producto,
+                    cantidad: this.cantidad
+                }
+                this.$store.commit('addToCart', item) 
 
-            toast({
-                message: 'El producto fue añadido al carro',
-                type: 'is-success',
-                dismissible: true,
-                pauseOnHover: true,
-                duration: 2000,
-                position: 'bottom-right',
-            })             
+                toast({
+                    message: 'El producto fue añadido al carro',
+                    type: 'is-success',
+                    dismissible: true,
+                    pauseOnHover: true,
+                    duration: 2000,
+                    position: 'bottom-right',
+                })  
+            }
+            else{
+                toast({
+                    message: 'Este producto requiere que se verifique como empresa',
+                    type: 'is-danger',
+                    dismissible: true,
+                    pauseOnHover: true,
+                    duration: 2000,
+                    position: 'bottom-right',
+                })                  
+            }
+   
         }
         
     }
